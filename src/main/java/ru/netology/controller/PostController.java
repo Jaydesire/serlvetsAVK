@@ -23,8 +23,10 @@ public class PostController {
   }
 
   public void getById(long id, HttpServletResponse response) throws IOException {
-    final ResponseHandler<Post> handler = () -> service.getById(id);
-    makeResponse(handler, response);
+    response.setContentType(APPLICATION_JSON);
+    final var data = service.getById(id);
+    final var gson = new Gson();
+    response.getWriter().print(gson.toJson(data));
   }
 
   public void save(Reader body, HttpServletResponse response) throws IOException {
